@@ -21,12 +21,33 @@ const exp = function(a, b) {
 }
 //make function for clear button:
 const clear = function(){
-    //TO DO:
+    num = '';
+    oldNum = ''
+    operator = {};
+    updateDisplay();
     return;
 }
+//refactor to store numbers as array to handle multiple operators?
+
+//update the display:
+const updateDisplay = function (){
+    const digitDisplays = Array.from(document.getElementsByClassName('digit'))
+    digitDisplays.forEach((digit) => {
+        digit.textContent = '';
+    })
+    if (num.length>0) {
+        let numberArray = num.split('');
+        console.log(numberArray)
+        for (let i = numberArray.length-1; i>=0; i--){
+            digitDisplays[i].textContent = numberArray[i];
+        }
+    }
+}
 //operate function:
-const operate = function (a, b, operator) {
-    if (operator === 'plus'){
+const operate = function (oldNum, num, operator) {
+    let a = +oldNum;
+    let b = +num;
+    if (operator === 'add'){
         return add(a,b);
     } else if (operator === 'minus'){
         return subtract(a, b);
@@ -37,14 +58,26 @@ const operate = function (a, b, operator) {
     } else if (operator === 'exp') {
         return exp(a, b);
     }
+    //oldNum = '';
+   // updateDisplay();
 }
+//initialize num and operator variables to store user input:
+let num = '';
+let oldNum = '';
+let operator = {};
+
+//function that concatenates existing number string and input number string:
+const addInputToNumber = function(oldNum, num) {
+    return oldNum + num;
+}
+
 //Make digit divs inside digitholder:
 digitHolder = document.getElementById('digitHolder')
-for (let i = 16; i>0; i--) {
+for (let i = 9; i>0; i--) {
     let div = document.createElement('div');
     div.id = `digit-${i}`;
     div.classList.add('digit')
-    div.textContent = i;
+    div.textContent = " ";
     digitHolder.appendChild(div);
     
 }
@@ -84,3 +117,60 @@ for (let i = 0; i<7; i++) {
     
     buttons.appendChild(btn);
 }
+
+//make event listeners for digits
+let digitButtons = document.getElementsByClassName('number');
+for (let i = 0; i<digitButtons.length; i++) {
+    digitButtons[i].addEventListener('click',  e => {
+        if (num.length < 9) {
+            num = addInputToNumber(num, e.target.textContent);
+            updateDisplay();
+        }
+        
+    })
+}
+//make event listeners for operators
+let operatorButtons = Array.from(document.getElementsByClassName('operator'));
+operatorButtons.forEach((button)=>{ 
+    console.log('going through buttons')
+    button.addEventListener('click', (e) => {
+        
+        switch (e.target.id) {
+            case 'btn-exp':
+                oldNum = num;
+                num = '';
+                operator = 'exp';
+                break;
+            case 'btn-C':
+                clear()
+                break;
+            case 'btn-÷':
+                oldNum = num;
+                num = '';
+                operator = 'divide';
+                break;
+            case 'btn-X':
+                oldNum = num;
+                num = '';
+                operator = 'times';
+                break;
+            case 'btn--':
+                oldNum = num;
+                num = '';
+                operator = 'minus';
+                break;
+            case 'btn-plus':
+                oldNum = num;
+                num = '';
+                operator = 'add';
+                break;
+            case 'btn-equals':
+                console.log('equals')
+                num = String(operate(oldNum, num, operator));
+                updateDisplay();
+                return;
+        }
+        updateDisplay();
+    })
+})
+

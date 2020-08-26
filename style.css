@@ -9,9 +9,8 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(9, 1fr);
-    border-style: solid;
-    border-width: 2px;
-    box-shadow: 1px 1px 10px 3px;
+    
+    box-shadow: 1px 1px 10px 1px;
     background-color: cornsilk;
     border-radius: 30px;
     height: 50rem;
@@ -28,9 +27,9 @@
     background-color: lightgray;
     border: 1px solid darkgray;
     align-items: center;
-    grid-template-rows: 1fr;
-    grid-template-columns: repeat(16, 1fr);
-    border-radius: 5px;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(9, 1fr);
+    border-radius: 10px;
     grid-column-start: 2;
     grid-column-end: 7;
     grid-row-start: 2;
@@ -40,6 +39,11 @@
 
 .digit {
     text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size:5em;
+    text-align: center;
+    grid-row-start: 2;
+    grid-row-end:3;
 }
 
 #buttons {
@@ -55,8 +59,9 @@
 }
 .btn {
     border-radius: 20px;
-    
     box-shadow:1px 1px 2px 1px gray;
+    font-size: 3em;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -149,4 +154,5 @@
 #btn-equals {
     grid-column-start: 4;
     grid-row-start: 5;
+    background-color: darkgray;
 }

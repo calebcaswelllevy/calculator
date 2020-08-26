@@ -23,12 +23,20 @@ const exp = function(a, b) {
 //make function for clear button:
 const clear = function(){
     num = '';
-    oldNum = ''
-    operator = {};
-    updateDisplay();
+    
+    numArray = [];
+    operator = [];
     return;
 }
-//refactor to store numbers and operators as array to handle multiple operations?
+
+//round to 9 sig figs:
+const round = function (num) {
+    if (num.indexOf(/\./) >1 && num.length > 9) {
+        num = num.slice(0,9)
+    }
+    return +num;
+}
+
 
 //update the display:
 const updateDisplay = function (){
@@ -40,15 +48,18 @@ const updateDisplay = function (){
     if (num.length>0 && num != undefined) {
         let numberArray = num.split('');
         console.log(numberArray)
+        let j = digitDisplays.length-1;
         for (let i = numberArray.length-1; i>=0; i--){
-            digitDisplays[i].textContent = numberArray[i];
+            digitDisplays[j].textContent = numberArray[i];
+            j--;
         }
+    
     }
 }
 //operate function:
 const operate = function (oldNum, num, operator) {
-    let a = +oldNum;
-    let b = +num;
+    let a = round(oldNum);
+    let b = round(num);
     if (operator === {} || oldNum === '') {return b;}
     if (operator === 'add'){
         return add(a,b);
@@ -64,10 +75,25 @@ const operate = function (oldNum, num, operator) {
     //oldNum = '';
    // updateDisplay();
 }
+
+//function to walk through input history and unpack it:
+const unpack = function(numArray, operator) {
+    let result = numArray[0];
+    let first;
+    let op;
+    let second;
+    for (let i = 0; i<operator.length; i++) {
+        first = result;
+        op = operator[i];
+        second = numArray[i+1]
+        result = operate(first, second, op);
+    }
+    return result;
+}
 //initialize num and operator variables to store user input:
+let numArray = [];
 let num = '';
-let oldNum = '';
-let operator = {};
+let operator = [];
 
 //function that concatenates existing number string and input number string:
 const addInputToNumber = function(oldNum, num) {
@@ -140,37 +166,41 @@ operatorButtons.forEach((button)=>{
         
         switch (e.target.id) {
             case 'btn-exp':
-                oldNum = num;
-                num = '';
-                operator = 'exp';
+                numArray.push(num);
+                num = ''
+                operator.push('exp');
                 break;
             case 'btn-C':
-                clear()
+                clear();
+                updateDisplay();
                 break;
             case 'btn-÷':
-                oldNum = num;
+                numArray.push(num);
                 num = '';
-                operator = 'divide';
+                operator.push('divide');
                 break;
             case 'btn-X':
-                oldNum = num;
+                numArray.push(num);
                 num = '';
-                operator = 'times';
+                operator.push('times');
                 break;
             case 'btn--':
-                oldNum = num;
+                numArray.push(num);
                 num = '';
-                operator = 'minus';
+                operator.push('minus');
                 break;
             case 'btn-plus':
-                oldNum = num;
+                numArray.push(num);
                 num = '';
-                operator = 'add';
+                operator.push('add');
                 break;
             case 'btn-equals':
-                console.log('equals')
-                num = String(operate(oldNum, num, operator));
+                console.log(numArray);
+                console.log(operator);
+                numArray.push(num);
+                num = String(unpack(numArray, operator));
                 updateDisplay();
+                clear();
                 return;
         }
         updateDisplay();

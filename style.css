@@ -1,0 +1,152 @@
+#main {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(9, 10em);
+    background-color: tan;
+    
+}
+#calculator {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: 1px 1px 10px 3px;
+    background-color: cornsilk;
+    border-radius: 30px;
+    height: 50rem;
+    width: 50em;
+    grid-column-start: 2;
+    grid-column-end: 7;
+    grid-row-start: 2;
+}
+
+#digitHolder {
+    width: 5fr;
+    height: 100%;
+    display: grid;
+    background-color: lightgray;
+    border: 1px solid darkgray;
+    align-items: center;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(16, 1fr);
+    border-radius: 5px;
+    grid-column-start: 2;
+    grid-column-end: 7;
+    grid-row-start: 2;
+    grid-row-end: 4;
+    box-shadow: 0px 0px 6px 1px black inset;
+}
+
+.digit {
+    text-align: center;
+}
+
+#buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-start: 2;
+    grid-column-end: 7;
+    grid-row-start: 5;
+    grid-row-end: 9;
+    --background-color: turquoise;
+    grid-gap:5px;
+}
+.btn {
+    border-radius: 20px;
+    
+    box-shadow:1px 1px 2px 1px gray;
+}
+
+
+#btn-7{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+
+#btn-8{
+    grid-column-start: 3;
+    grid-row-start: 2;
+}
+
+#btn-9{
+    grid-column-start: 4;
+    grid-row-start: 2;
+}
+
+#btn-4{
+    grid-column-start: 2;
+    grid-row-start: 3;
+}
+
+#btn-5{
+    grid-column-start: 3;
+    grid-row-start: 3;
+}
+
+#btn-6{
+    grid-column-start: 4;
+    grid-row-start: 3;
+}
+
+#btn-1{
+    grid-column-start: 2;
+    grid-row-start: 4;
+}
+
+#btn-2{
+    grid-column-start: 3;
+    grid-row-start: 4;
+}
+#btn-3{
+    grid-column-start: 4;
+    grid-row-start: 4;
+}
+
+#btn-0{
+    grid-column-start: 2;
+    grid-row-start: 5;
+}
+#btn-decimal{
+    grid-column-start: 3;
+    grid-row-start: 5;
+}
+
+#btn-exp {
+    grid-column-start: 1;
+    grid-row-start: 3;
+}
+
+#btn-C {
+    grid-column-start: 1;
+    grid-row-start: 4;
+    grid-row-end: 6;
+    background-color: darkcyan;
+}
+
+#btn-÷ {
+    grid-column-start: 5;
+    grid-row-start: 1;
+}
+
+#btn-X {
+    grid-column-start: 5;
+    grid-row-start: 2;
+}
+
+#btn-- {
+    grid-column-start: 5;
+    grid-row-start: 3;
+}
+
+#btn-plus {
+    grid-column-start: 5;
+    grid-row-start: 4;
+    grid-row-end: 6;
+}
+
+#btn-equals {
+    grid-column-start: 4;
+    grid-row-start: 5;
+}

@@ -13,7 +13,8 @@ const multiply = function (a, b) {
 }
 //divide:
 const divide = function (a, b) {
-    return a/b;
+    if (b !=0 ) return a/b;
+    else return 'ERROR';
 }
 //exponentiate:
 const exp = function(a, b) {
@@ -27,7 +28,7 @@ const clear = function(){
     updateDisplay();
     return;
 }
-//refactor to store numbers as array to handle multiple operators?
+//refactor to store numbers and operators as array to handle multiple operations?
 
 //update the display:
 const updateDisplay = function (){
@@ -35,7 +36,8 @@ const updateDisplay = function (){
     digitDisplays.forEach((digit) => {
         digit.textContent = '';
     })
-    if (num.length>0) {
+    console.log('num = ', num)
+    if (num.length>0 && num != undefined) {
         let numberArray = num.split('');
         console.log(numberArray)
         for (let i = numberArray.length-1; i>=0; i--){
@@ -47,6 +49,7 @@ const updateDisplay = function (){
 const operate = function (oldNum, num, operator) {
     let a = +oldNum;
     let b = +num;
+    if (operator === {} || oldNum === '') {return b;}
     if (operator === 'add'){
         return add(a,b);
     } else if (operator === 'minus'){
@@ -93,7 +96,7 @@ for (let i = 9; i>0; i--) {
         }
         else {
             btn.id = 'btn-decimal';
-            btn.txtContent = 'decimal';
+            btn.textContent = '.';
             
         }
         buttons.appendChild(btn);

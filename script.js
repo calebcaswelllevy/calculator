@@ -29,11 +29,15 @@ const clear = function(){
     return;
 }
 
-//round to 9 sig figs:
+//round to 9 sig figs, or return error if too large:
 const round = function (num) {
-    if (num.indexOf(/\./) >1 && num.length > 9) {
+    num = String(num);
+    if (num.indexOf('.') > 1 && num.length > 9) {
         num = num.slice(0,9)
-    }
+    } 
+    else if (num.length > 9) { 
+        return "ERROR"; }
+
     return +num;
 }
 
@@ -58,8 +62,8 @@ const updateDisplay = function (){
 }
 //operate function:
 const operate = function (oldNum, num, operator) {
-    let a = round(oldNum);
-    let b = round(num);
+    let a = +oldNum;
+    let b = +num;
     if (operator === {} || oldNum === '') {return b;}
     if (operator === 'add'){
         return add(a,b);
@@ -72,8 +76,7 @@ const operate = function (oldNum, num, operator) {
     } else if (operator === 'exp') {
         return exp(a, b);
     }
-    //oldNum = '';
-   // updateDisplay();
+    
 }
 
 //function to walk through input history and unpack it:
@@ -198,7 +201,7 @@ operatorButtons.forEach((button)=>{
                 console.log(numArray);
                 console.log(operator);
                 numArray.push(num);
-                num = String(unpack(numArray, operator));
+                num = String(round(unpack(numArray, operator)));
                 updateDisplay();
                 clear();
                 return;

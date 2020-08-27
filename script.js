@@ -48,10 +48,10 @@ const updateDisplay = function (){
     digitDisplays.forEach((digit) => {
         digit.textContent = '';
     })
-    console.log('num = ', num)
+    
     if (num.length>0 && num != undefined) {
         let numberArray = num.split('');
-        console.log(numberArray)
+        
         let j = digitDisplays.length-1;
         for (let i = numberArray.length-1; i>=0; i--){
             digitDisplays[j].textContent = numberArray[i];
@@ -149,14 +149,36 @@ for (let i = 0; i<7; i++) {
     
     buttons.appendChild(btn);
 }
+// make backspace button:
+let backspace = document.createElement('button');
+backspace.classList.add('btn');
+backspace.id = 'backspace';
+backspace.addEventListener('click', (e) => {
+    num = num.slice(0, num.length-1);
+    updateDisplay();
+})
+backspace.style.gridRowStart = '1';
+backspace.style.gridColumnStart = '1';
+backspace.textContent = 'Del';
+backspace.style.backgroundColor = '#FA8072';
+
+buttons.appendChild(backspace);
+
 
 //make event listeners for digits
 let digitButtons = document.getElementsByClassName('number');
 for (let i = 0; i<digitButtons.length; i++) {
     digitButtons[i].addEventListener('click',  e => {
         if (num.length < 9) {
+            if (digitButtons[i].id === 'btn-decimal' ) {
+                if (num.indexOf(".") === -1) {
+                    num = addInputToNumber(num, e.target.textContent);
+                    updateDisplay();
+                }
+            } else {
             num = addInputToNumber(num, e.target.textContent);
             updateDisplay();
+            }
         }
         
     })
@@ -164,7 +186,7 @@ for (let i = 0; i<digitButtons.length; i++) {
 //make event listeners for operators
 let operatorButtons = Array.from(document.getElementsByClassName('operator'));
 operatorButtons.forEach((button)=>{ 
-    console.log('going through buttons')
+   
     button.addEventListener('click', (e) => {
         
         switch (e.target.id) {
@@ -198,8 +220,6 @@ operatorButtons.forEach((button)=>{
                 operator.push('add');
                 break;
             case 'btn-equals':
-                console.log(numArray);
-                console.log(operator);
                 numArray.push(num);
                 num = String(round(unpack(numArray, operator)));
                 updateDisplay();

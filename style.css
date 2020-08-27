@@ -5,6 +5,13 @@
     background-color: tan;
     
 }
+
+#title {
+    font-family: 'Orbitron', sans-serif;
+    font-size:5em;
+    grid-column-start: 2;
+    grid-column-end: 7;
+}
 #calculator {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -76,6 +83,9 @@
 #btn-7{
     grid-column-start: 2;
     grid-row-start: 2;
+}
+.operator {
+    background-color:lightgray;
 }
 
 #btn-8{

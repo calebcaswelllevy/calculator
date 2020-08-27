@@ -8,9 +8,10 @@
 
 #title {
     font-family: 'Orbitron', sans-serif;
-    font-size:5em;
+    font-size:4em;
     grid-column-start: 2;
     grid-column-end: 7;
+    display: flex;
 }
 #calculator {
     display: grid;
@@ -42,6 +43,13 @@
     grid-row-start: 2;
     grid-row-end: 4;
     box-shadow: 0px 0px 6px 1px black inset;
+}
+#entered {
+    font-family: 'Orbitron', sans-serif;
+    grid-column-end: 10; 
+    grid-column-start: 1;
+    text-align: right;
+    font-size: 2em
 }
 
 .digit {

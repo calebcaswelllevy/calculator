@@ -41,7 +41,7 @@ const round = function (num) {
     return +num;
 }
 
-
+let entered = document.getElementById('entered');
 //update the display:
 const updateDisplay = function (){
     const digitDisplays = Array.from(document.getElementsByClassName('digit'))
@@ -57,9 +57,34 @@ const updateDisplay = function (){
             digitDisplays[j].textContent = numberArray[i];
             j--;
         }
-    
+    //update the upper display too:
     }
+    updateUpperDisplay();
+    
+}   
+function updateUpperDisplay(){
+    //entered values:
+    let str = '';
+    const operatorDict = {
+        'add': '+',
+        'minus': '-',
+        'times': 'X',
+        'divide': '÷',
+        'exp': 'exp',
+    }
+    
+    if (operator !== [] && numArray !== []) {
+        console.log("numbers:", numArray)
+        for (let i = 0; i<operator.length; i++) {
+            str += numArray[i]
+            
+            str += operatorDict[operator[i]];
+        }
+    }
+    entered.textContent = str
 }
+
+
 //operate function:
 const operate = function (oldNum, num, operator) {
     let a = +oldNum;
@@ -98,6 +123,7 @@ let numArray = [];
 let num = '';
 let operator = [];
 
+
 //function that concatenates existing number string and input number string:
 const addInputToNumber = function(oldNum, num) {
     return oldNum + num;
@@ -109,7 +135,7 @@ for (let i = 9; i>0; i--) {
     let div = document.createElement('div');
     div.id = `digit-${i}`;
     div.classList.add('digit')
-    div.textContent = " ";
+    div.textContent = ' ';
     digitHolder.appendChild(div);
     
 }
@@ -224,9 +250,75 @@ operatorButtons.forEach((button)=>{
                 num = String(round(unpack(numArray, operator)));
                 updateDisplay();
                 clear();
+                updateUpperDisplay()
                 return;
         } 
         updateDisplay();
     })
 })
 
+//Add keyboard support:
+document.addEventListener('keydown', keyboardInput);
+
+function keyboardInput(e) {
+    if (e.keyCode === 8) {//Delete
+        num = num.slice(0, num.length-1);
+        updateDisplay();
+        } else //number or operator
+        { let char = String.fromCharCode(e.keyCode);
+        switch (char) {//if number add number to numArray, 
+                       //if operator add it to operator array
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+                if (e.shiftKey) {//multiplication
+                    numArray.push(num);
+                    num = '';
+                    operator.push('times');
+                    updateDisplay();
+                    break;
+                    }
+            case '9':
+            case '0':
+                num = addInputToNumber(num, char);
+                updateDisplay();
+                break;
+            case '=':
+                if (!e.shiftKey) {
+                    //equals
+                    numArray.push(num);
+                    num = String(round(unpack(numArray, operator)));
+                    updateDisplay();
+                    clear();
+                    return;
+                } else {
+                    //plus
+                    numArray.push(num);
+                    num = '';
+                    operator.push('add');
+                    updateDisplay();
+                    break;
+                }
+                
+            case '-'://minus
+                numArray.push(num);
+                num = '';
+                operator.push('minus');
+                updateDisplay();
+                break;
+            case '/'://division
+                numArray.push(num);
+                num = '';
+                operator.push('divide');
+                updateDisplay();
+                break;
+            case '':
+                break;
+        }
+}
+}

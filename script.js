@@ -172,7 +172,7 @@ operatorButtons.forEach((button)=>{
                 num = String(operate(oldNum, num, operator));
                 updateDisplay();
                 return;
-        }
+        } 
         updateDisplay();
     })
 })
